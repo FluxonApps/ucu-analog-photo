@@ -21,7 +21,7 @@ const DashboardPage = () => {
 
   return (
     <Box p={6}>
-      <Text>Welcome to your app!</Text>
+      <Text>Snapchat</Text>
       <Button onClick={signOut} isDisabled={isSigningOut} isLoading={isSigningOut}>
         Sign out
       </Button>
