@@ -4,22 +4,25 @@ import { useState } from 'react';
 import { useCollection } from 'react-firebase-hooks/firestore';
 
 import { db } from '../../firebase.config';
+import { set } from 'firebase/database';
 
 interface User {
   id: string;
   name: string;
   mark: number;
+  profile_picture: string;
 }
 export function FirebaseDemo() {
   const [newName, setNewName] = useState('');
   const [newMark, setNewMark] = useState(0);
+  const [newProfilePicture, setNewProfilePicture] = useState('');
 
   const usersCollectionRef = collection(db, 'users');
 
   const [users, usersLoading, usersError] = useCollection(query(usersCollectionRef) as CollectionReference<User>);
 
   const createUser = async () => {
-    await addDoc(usersCollectionRef, { name: newName, mark: Number(newMark) });
+    await addDoc(usersCollectionRef, { name: newName, mark: Number(newMark), profile_picture: newProfilePicture }); 
   };
 
   const updateUser = async (id: string, mark: number) => {
@@ -32,6 +35,14 @@ export function FirebaseDemo() {
     const userDoc = doc(db, 'users', id);
     await deleteDoc(userDoc);
   };
+
+  const displayProfilePicture = (profilePicture: string) => {
+    return profilePicture ? (
+      <img src={profilePicture} alt="profile picture" style={{ width: '100px', height: '100px' }} />
+    ) : (
+      <Box>No profile picture</Box>
+    );
+    }
 
   if (usersLoading) {
     return <Spinner />;
@@ -60,6 +71,13 @@ export function FirebaseDemo() {
             }}
             size="sm"
           />
+          <Input
+            onChange={(event) => {
+              setNewProfilePicture(event.target.value);
+            }}
+            placeholder="Write yours url image..."
+            size="sm"
+          />
         </Stack>
         <Button width="50%" size="sm" colorScheme="green" onClick={createUser}>
           Create User
@@ -71,6 +89,7 @@ export function FirebaseDemo() {
             <Box gap="6" border="1px" borderColor="gray.300" width="20%" px="6" py="8" key={user.id}>
               <Heading>Name: {user.data().name}</Heading>
               <Heading>Mark: {user.data().mark}</Heading>
+              {displayProfilePicture(user.data().profile_picture)}
               <HStack gap="4" mt="4">
                 <Button size="sm" colorScheme="green" onClick={() => updateUser(user.id, user.data().mark)}>
                   Increase Mark
