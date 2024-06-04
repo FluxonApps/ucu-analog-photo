@@ -16,41 +16,6 @@ interface User {
   mark: number;
 }
 
-const ProfileDetails = () => {
-
-return <Flex flexDir="column" gap="6" border="1px" borderColor="gray.200" width="20%" px="6" py="8">
-<Stack spacing="3">
-  <Input
-    onChange={(event) => {
-      setNewName(event.target.value);
-    }}
-    placeholder="Name..."
-    size="sm"
-  />
-  <Input
-    onChange={(event) => {
-      setNewProfilePicture(event.target.value);
-    }}
-    placeholder="Write yours url image..."
-    size="sm"
-  />
-  <RadioGroup 
-    onChange={(value) => {
-      setNewRole(value);
-    }}
-  >
-    <Stack direction='row'>
-      <Radio value='Student'>Student</Radio>
-      <Radio value='Mentor'>Mentor</Radio>
-    </Stack>
-  </RadioGroup>
-</Stack>
-<Button width="50%" size="sm" colorScheme="green" onClick={createUser}>
-  Create User
-</Button>
-</Flex>
-};
-
 export function ProfilePage() {
   const [user, userLoading] = useAuthState(auth);
   const [signOut, isSigningOut] = useSignOut(auth);
