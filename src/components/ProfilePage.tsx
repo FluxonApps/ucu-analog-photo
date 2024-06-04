@@ -42,6 +42,10 @@ export function ProfilePage() {
     await updateDoc(userDoc, newFields);
   };
 
+  const addPhoto = async (id: string, photoUrl: string) => {
+    const userPhotosDoc = collection(db, 'users', id, 'photos');
+    await addDoc(userPhotosDoc, {photoUrl: photoUrl});
+  }
 
   // Do not show page content until auth state is fetched.
   if (userLoading) {
