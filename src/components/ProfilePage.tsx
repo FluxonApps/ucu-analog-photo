@@ -1,4 +1,4 @@
-import { Box, Button, Image, Flex, Heading, Input, Stack, HStack, Spinner, Text, Avatar, RadioGroup, Radio, Wrap, WrapItem, Center } from '@chakra-ui/react';
+import { Box, Button, Image, Flex, Heading, Input, Stack, HStack, Spinner, Text, Avatar, RadioGroup, Radio, Wrap, WrapItem, Center, Spacer, InputLeftElement, InputGroup} from '@chakra-ui/react';
 import { collection, addDoc, updateDoc, deleteDoc, doc, query, CollectionReference } from 'firebase/firestore';
 import { useCollection, useDocument } from 'react-firebase-hooks/firestore';
 import { Auth, getAuth } from 'firebase/auth';
@@ -85,18 +85,30 @@ export function ProfilePage() {
   </Button></Box>
 
   } else {
-    return <><><Flex>
+    return <><Wrap justifyContent="center" alignItems="center" p={30}><><InputGroup size="lg">
+    <InputLeftElement pointerEvents='none'>
+      {/* <SearchIcon color='gray.300' /> */}
+    </InputLeftElement>
+    <Input placeholder='Search your photo' width="70vh"/>
+  </InputGroup><Box>
+    <Avatar name={userProfile?.data()?.name} src={userProfile?.data()?.profile_picture} width="50px" height="50px" />
+    </Box>
+    
+    
+    <Flex>
+      <HStack spacing='80vh'>
         <Box>
           <Heading>Personal info</Heading>
         </Box>
         <Button onClick={() => setEditing(true)}>Edit</Button>
+      </HStack>
       </Flex><Flex>
-        <Wrap spacing='50px' justify='center'>
-          <WrapItem>
+      <HStack spacing='60px' justify='center'>
+          
           <Box>
             <Avatar name={userProfile?.data()?.name} src={userProfile?.data()?.profile_picture} width="100px" height="100px" />
           </Box>
-          </WrapItem>
+          
           <Box>
             <Heading>{userProfile?.data()?.name}</Heading>
             <Text>{userProfile?.data()?.email}</Text>
@@ -105,15 +117,13 @@ export function ProfilePage() {
               {userProfile?.data()?.role}
             </Box>
           )} 
-          
         </Box> 
-          
-         
+
         <Stack>
             <Text>3</Text>
             <Text>Posts</Text>
           </Stack>
-        </Wrap> 
+          </HStack>
           
         </Flex></><Flex>
           <Box>
@@ -129,7 +139,8 @@ export function ProfilePage() {
           <Box boxSize='sm'>
             <Image src='https://bit.ly/dan-abramov' alt='Dan Abramov' />
           </Box>
-        </Flex></>
+        </Flex>
+        </Wrap></>
   }
 }
 
