@@ -111,23 +111,21 @@ export function ProfilePage() {
   </Button></Box>
 
   } else {
-    return <><Wrap justifyContent="center" alignItems="center" p={30}><><InputGroup size="lg">
-    <InputLeftElement pointerEvents='none'>
-      {/* <SearchIcon color='gray.300' /> */}
-    </InputLeftElement>
+    return <><Stack justify="spaceAround" p={20}><>
+    <Wrap>
     <Input placeholder='Search your photo' width="70vh"/>
-  </InputGroup><Box>
+    <Spacer />
+    <Box>
     <Avatar name={userProfile?.data()?.name} src={userProfile?.data()?.profile_picture} width="50px" height="50px" />
-    </Box>
+    </Box></Wrap>
     
     
     <Flex>
-      <HStack spacing='80vh'>
         <Box>
           <Heading>Personal info</Heading>
         </Box>
+        <Spacer />
         <Button onClick={() => setEditing(true)}>Edit</Button>
-      </HStack>
       </Flex><Flex>
       <HStack spacing='60px' justify='center'>
           
@@ -155,18 +153,20 @@ export function ProfilePage() {
           <Box>
             <Heading>Photos</Heading>
           </Box>
-        </Flex><Flex>
+        </Flex><Flex justifyContent='center'>
           <Box boxSize='sm'>
             <Image src='https://bit.ly/dan-abramov' alt='Dan Abramov' />
           </Box>
+          <Spacer />
           <Box boxSize='sm'>
             <Image src='https://bit.ly/dan-abramov' alt='Dan Abramov' />
           </Box>
+          <Spacer />
           <Box boxSize='sm'>
             <Image src='https://bit.ly/dan-abramov' alt='Dan Abramov' />
           </Box>
         </Flex>
-        </Wrap></>
+        </Stack></>
   }
 }
 
