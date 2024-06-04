@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Heading, Input, Stack, HStack, Spinner, Text, Avatar } from '@chakra-ui/react';
+import { Box, Button, Image, Flex, Heading, Input, Stack, HStack, Spinner, Text, Avatar } from '@chakra-ui/react';
 import { collection, addDoc, updateDoc, deleteDoc, doc, query, CollectionReference } from 'firebase/firestore';
 import { useCollection, useDocument } from 'react-firebase-hooks/firestore';
 import { Auth, getAuth } from 'firebase/auth';
@@ -33,6 +33,36 @@ export function ProfilePage() {
   if (!user) {
     return <Navigate to="/auth" replace />;
   }
+
+  return (
+    <><><Flex>
+      <Box>
+        <Heading>Personal info</Heading>
+      </Box>
+    </Flex><Flex>
+        <Box>
+          <Avatar name={userProfile?.data()?.name} src={userProfile?.data()?.profile_picture} width="100px" height="100px" />
+        </Box>
+        <Box>
+          <Heading>{userProfile?.data()?.name}</Heading>
+          <Text>{userProfile?.data()?.email}</Text>
+        </Box>
+      </Flex></><Flex>
+        <Box>
+          <Heading>Photos</Heading>
+        </Box>
+      </Flex><Flex>
+        <Box boxSize='sm'>
+          <Image src='https://bit.ly/dan-abramov' alt='Dan Abramov' />
+        </Box>
+        <Box boxSize='sm'>
+          <Image src='https://bit.ly/dan-abramov' alt='Dan Abramov' />
+        </Box>
+        <Box boxSize='sm'>
+          <Image src='https://bit.ly/dan-abramov' alt='Dan Abramov' />
+        </Box>
+      </Flex></>
+  );
 
   return <Box>{userProfile?.data()?.email} {userProfile?.data()?.name}</Box>;
 }
