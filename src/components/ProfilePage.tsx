@@ -1,4 +1,4 @@
-import { Box, Button, Image, Flex, Heading, Input, Stack, HStack, Spinner, Text, Avatar, RadioGroup, Radio } from '@chakra-ui/react';
+import { Box, Button, Image, Flex, Heading, Input, Stack, HStack, Spinner, Text, Avatar, RadioGroup, Radio, Wrap, WrapItem, Center } from '@chakra-ui/react';
 import { collection, addDoc, updateDoc, deleteDoc, doc, query, CollectionReference } from 'firebase/firestore';
 import { useCollection, useDocument } from 'react-firebase-hooks/firestore';
 import { Auth, getAuth } from 'firebase/auth';
@@ -91,9 +91,12 @@ export function ProfilePage() {
         </Box>
         <Button onClick={() => setEditing(true)}>Edit</Button>
       </Flex><Flex>
+        <Wrap spacing='50px' justify='center'>
+          <WrapItem>
           <Box>
             <Avatar name={userProfile?.data()?.name} src={userProfile?.data()?.profile_picture} width="100px" height="100px" />
           </Box>
+          </WrapItem>
           <Box>
             <Heading>{userProfile?.data()?.name}</Heading>
             <Text>{userProfile?.data()?.email}</Text>
@@ -101,7 +104,17 @@ export function ProfilePage() {
             <Box as='button' borderRadius='md' bg='green' color='white' px={3} h={6}>
               {userProfile?.data()?.role}
             </Box>
-          )}          </Box>
+          )} 
+          
+        </Box> 
+          
+         
+        <Stack>
+            <Text>3</Text>
+            <Text>Posts</Text>
+          </Stack>
+        </Wrap> 
+          
         </Flex></><Flex>
           <Box>
             <Heading>Photos</Heading>
