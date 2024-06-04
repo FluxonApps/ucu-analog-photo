@@ -2,10 +2,16 @@ import { Box, Button, Image, Flex, Heading, Input, Stack, HStack, Spinner, Text,
 import { collection, addDoc, updateDoc, deleteDoc, doc, query, CollectionReference } from 'firebase/firestore';
 import { useCollection, useDocument } from 'react-firebase-hooks/firestore';
 import { Auth, getAuth } from 'firebase/auth';
+import {
+  getDownloadURL,
+  ref,
+  uploadBytes,
+} from "firebase/storage";
 import { useAuthState, useSignOut } from 'react-firebase-hooks/auth';
 import { Navigate } from 'react-router-dom';
 
-import { db } from '../../firebase.config';
+import { db, storage } from '../../firebase.config';
+console.log(storage);
 import { useState } from 'react';
 
 const auth = getAuth();
@@ -49,6 +55,22 @@ export function ProfilePage() {
 
   if (isEditing) {
     return  <Box><Stack spacing="3">
+    <Input
+      onChange={async (event) => {
+        if (event.target.files && event.target.files.length > 0 && event.target.files[0] !== undefined) {
+          const imageRef = ref(storage, `profilePhotos/${user?.uid}`);
+          console.log(imageRef);
+          const imageSnapshot = await uploadBytes(imageRef, event.target.files[0]);
+          console.log(imageSnapshot);
+          const imageUrl = await getDownloadURL(imageSnapshot.ref);
+          console.log(imageUrl);
+          setNewProfilePicture(imageUrl);
+        }
+      }}
+      accept="image/png,image/jpeg"
+      type="file"
+      size="sm"
+    />
     <Input
       defaultValue={userProfile?.data()?.name}
       onChange={(event) => {
