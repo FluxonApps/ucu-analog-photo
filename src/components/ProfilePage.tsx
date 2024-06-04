@@ -97,8 +97,11 @@ export function ProfilePage() {
           <Box>
             <Heading>{userProfile?.data()?.name}</Heading>
             <Text>{userProfile?.data()?.email}</Text>
-            <Box as='button' borderRadius='md' bg='green' color='white' px={3} h={6}>{userProfile?.data()?.role}</Box>
-          </Box>
+            {userProfile?.data()?.role && (
+            <Box as='button' borderRadius='md' bg='green' color='white' px={3} h={6}>
+              {userProfile?.data()?.role}
+            </Box>
+          )}          </Box>
         </Flex></><Flex>
           <Box>
             <Heading>Photos</Heading>
