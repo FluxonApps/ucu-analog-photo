@@ -14,7 +14,7 @@ import PhotoPage from './components/PhotoPage.tsx';
 export const App = () => {
   return (
     <Routes>
-      <Route path="/" element={<AuthPage />} />
+      <Route path="/" element={<PhotoListPage />} />
       <Route path="/firebase-demo" element={<FirebaseDemo />} />
       <Route path="/auth" element={<AuthPage />} />
       <Route path="/dashboard" element={<DashboardPage />} />

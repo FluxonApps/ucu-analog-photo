@@ -39,10 +39,9 @@ const PhotoCard = (props: { userPhotos: any; }) =>  {
       
       <Flex flexDirection={'column'}>
         <Flex flexDirection={'row'}>
-        
         <Box> <Avatar src={userProfile?.data().profile_picture} width='50px' height='50px'></Avatar> </Box>
-        <Box> {userProfile?.data().name ? userProfile?.data().name : 'User'}</Box>
-        <Box> {userProfile?.data().role ? userProfile?.data().role : 'Roleless'}</Box>
+        <Box> {userProfile?.data().name ? userProfile?.data().name : 'User'}</Box> 
+        <Box> {userProfile?.data().role ? userProfile?.data().role : 'Roleless'}</Box> 
 
         </Flex>
         <Flex flexDirection={'column'}>
@@ -160,7 +159,7 @@ function PhotoListPage() {
     </RadioGroup>
   </Stack>
   <Button width="50%" size="sm" colorScheme="green" onClick={() => {
-      updateUser(user.uid, { name: newName, profile_picture: newProfilePicture, role: newRole });
+      // updateUser(user.uid, { name: newName, profile_picture: newProfilePicture, role: newRole });
       setEditing(false);
     }}>
     Update User
