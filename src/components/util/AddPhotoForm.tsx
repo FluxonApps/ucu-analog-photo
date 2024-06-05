@@ -3,6 +3,7 @@ import { storage } from '../../../firebase.config';
 import { useState } from 'react';
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { v4 as uuidv4 } from 'uuid';
+import { useNavigate } from 'react-router-dom';
 
 
 export const AddPhotoForm = (props: { addPhotoButton: any }) => {
@@ -14,8 +15,11 @@ export const AddPhotoForm = (props: { addPhotoButton: any }) => {
     const [newPhoto, setNewPhoto] = useState('');
     const [isEditingPhoto, setEditingPhoto] = useState(false);
 
+    const navigate = useNavigate();
 
-    return <Box><Stack spacing="3">
+    return <Box>
+        <Button onClick={() => navigate('/profile')}>{'<-'}</Button>
+        <Stack spacing="3">
       {isEditingPhoto ?
         <Input
           onChange={async (event) => {
