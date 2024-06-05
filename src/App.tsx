@@ -7,6 +7,7 @@ import DashboardPage from './components/DashboardPage.tsx';
 import FirebaseDemo from './components/FirebaseDemo.tsx';
 import MainLayout from './components/layout/MainLayout.tsx';
 import ProfilePage from './components/ProfilePage.tsx';
+import PhotoListPage from './components/PhotoListPage.tsx';
 
 export const App = () => {
   return (
@@ -16,6 +17,7 @@ export const App = () => {
       <Route path="/auth" element={<AuthPage />} />
       <Route path="/dashboard" element={<DashboardPage />} />
       <Route path="/profile" element={<ProfilePage />} />
+      <Route path="/photolist" element={<PhotoListPage />} />
     </Routes>
   );
 };
