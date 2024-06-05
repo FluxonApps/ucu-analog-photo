@@ -12,9 +12,10 @@ import { Navigate } from 'react-router-dom';
 
 import { db, storage } from '../../firebase.config';
 console.log(storage);
-import { useState } from 'react';
-import { ProfileCard } from './util/ProfileCard';
+
+import { useEffect, useState } from 'react';
 import { ProfileForm } from './util/ProfileForm';
+import { ProfileCard } from './util/ProfileCard';
 
 const auth = getAuth();
 
@@ -24,34 +25,33 @@ interface User {
   mark: number;
 }
 
+
 export function ProfilePage() {
   const [user, userLoading] = useAuthState(auth);
   const [signOut, isSigningOut] = useSignOut(auth);
   const usersCollectionRef = collection(db, 'users');
-  const [userProfile, loadingUserProfile, errorLoadingUserProfile] = useDocument(
-    doc(usersCollectionRef, user?.uid || 'asdf')
-  );
 
+  const [docRef, setDocRef] = useState<any>(null);
+  
+  useEffect(() => {
+    if (user?.uid) {
+      setDocRef(doc(usersCollectionRef, user.uid));
+    }
+  }, [user, usersCollectionRef]);
+  
+  const [userProfile, loadingUserProfile] = useDocument(docRef);
   const [isEditing, setEditing] = useState(false);
-
-  const [newName, setNewName] = useState('');
-  const [newProfilePicture, setNewProfilePicture] = useState('');
-  const [newRole, setNewRole] = useState('');
 
   const updateUser = async (id: string, newFields: any) => {
     const userDoc = doc(db, 'users', id);
     console.log(newFields);
+    setEditing(false);
     await updateDoc(userDoc, newFields);
     setEditing(false)
   };
 
-  const addPhoto = async (id: string, photoUrl: string) => {
-    const userPhotosDoc = collection(db, 'users', id, 'photos');
-    await addDoc(userPhotosDoc, {photoUrl: photoUrl});
-  }
-
   // Do not show page content until auth state is fetched.
-  if (userLoading || loadingUserProfile) {
+  if (userLoading || loadingUserProfile || !userProfile) {
     return <Spinner />;
   }
 
@@ -61,7 +61,7 @@ export function ProfilePage() {
   }
 
   if (isEditing) {
-    return  userProfile && <ProfileForm userUid={user.uid} userData={userProfile?.data()} updateUser={updateUser}></ProfileForm>
+    return <ProfileForm userUid={user.uid} userData={userProfile?.data()} updateUser={updateUser}/>
   } else {
     return <ProfileCard userData={userProfile?.data()} setEditing={setEditing}></ProfileCard>
   }
