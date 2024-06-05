@@ -29,8 +29,11 @@ export function ProfilePage() {
   
   const [userProfile, loadingUserProfile] = useDocument(docRef);
 
+  const [photoAuthor, loadingPhotoAuthor] = useDocument(doc(db, 'users', 'xQbvuayjyZNlasY4pekRHOeU2sE2'));
+  const [userPhoto, loadingUserPhoto] = useDocument(doc(db, 'userPhotos', 'hs6KELRbh2wa0itcXwDL'));
+  console.log(photoAuthor);
   // Do not show page content until auth state is fetched.
-  if (userLoading || loadingUserProfile || !userProfile) {
+  if (userLoading || loadingUserProfile || loadingUserPhoto || loadingPhotoAuthor || !userProfile || !userPhoto || !photoAuthor) {
     return <Spinner />;
   }
 
@@ -40,7 +43,7 @@ export function ProfilePage() {
   }
 
 
-  return <PhotoCard userData={userProfile?.data()}></PhotoCard>
+  return <PhotoCard userData={userProfile?.data()} userPhoto={userPhoto?.data()} photoAuthor={photoAuthor?.data()}></PhotoCard>
 }
 
 export default ProfilePage;
