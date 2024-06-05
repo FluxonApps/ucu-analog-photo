@@ -111,12 +111,12 @@ export function ProfilePage() {
   </Button></Box>
 
   } else {
-    return <><Stack justify="spaceAround" p={20}><>
+    return <><Stack justify="spaceAround" px={40} py={10} spacing='15'><>
     <Wrap>
-    <Input placeholder='Search your photo' width="70vh"/>
+    <Input placeholder='Search your photo' width="70vh" bg='#bee8f0'/>
     <Spacer />
     <Box>
-    <Avatar name={userProfile?.data()?.name} src={userProfile?.data()?.profile_picture} width="50px" height="50px" />
+    <Avatar name={userProfile?.data()?.name} src={userProfile?.data()?.profile_picture} width="40px" height="40px" />
     </Box></Wrap>
     
     
@@ -125,7 +125,7 @@ export function ProfilePage() {
           <Heading>Personal info</Heading>
         </Box>
         <Spacer />
-        <Button onClick={() => setEditing(true)}>Edit</Button>
+        <Button onClick={() => setEditing(true)} bg='#62DAF2' borderRadius='50px'>Edit</Button>
       </Flex><Flex>
       <HStack spacing='60px' justify='center'>
           
@@ -137,7 +137,7 @@ export function ProfilePage() {
             <Heading>{userProfile?.data()?.name}</Heading>
             <Text>{userProfile?.data()?.email}</Text>
             {userProfile?.data()?.role && (
-            <Box as='button' borderRadius='md' bg='green' color='white' px={3} h={6}>
+            <Box as='button' borderRadius='md' bg='#bee8f0' color='gray' px={3} h={6}>
               {userProfile?.data()?.role}
             </Box>
           )} 
@@ -154,6 +154,18 @@ export function ProfilePage() {
             <Heading>Photos</Heading>
           </Box>
         </Flex><Flex justifyContent='center'>
+        <Button
+            height='300px'
+            width='300px'
+            border='2px'
+            borderColor='blue.500'
+            borderRadius='0px'
+          >
+          <svg xmlns="http://www.w3.org/2000/svg" width="70" height="70" fill="currentColor" className="bi bi-plus" viewBox="0 0 16 16">
+            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+          </svg>
+          </Button>
+          <Spacer />
           <Box boxSize='sm'>
             <Image src='https://bit.ly/dan-abramov' alt='Dan Abramov' />
           </Box>
