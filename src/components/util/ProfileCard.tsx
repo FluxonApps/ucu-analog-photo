@@ -4,9 +4,9 @@ import { Box, Button, Image, Flex, Heading, Input, Stack, HStack, Spinner, Text,
 export const ProfileCard =(props: { userData: any; setEditing: any; }) => {
     console.log(props)
 const { userData, setEditing } = props;
-return <><Stack justify="spaceAround" px={40} py={10} spacing='15'><>
+return <><Stack justify="spaceAround" px={40} py={10} spacing='15' backgroundColor='#f1f7f8' minHeight='100vh' color='00232a'><>
 <Wrap>
-<Input placeholder='Search your photo' width="70vh" bg='#bee8f0'/>
+<Input placeholder='Search your photo' width="70vh" bg='#bee8f0' borderRadius='30px'/>
 <Spacer />
 <Box>
 <Avatar name={userData.name} src={userData.profile_picture} width="40px" height="40px" />
@@ -18,7 +18,7 @@ return <><Stack justify="spaceAround" px={40} py={10} spacing='15'><>
       <Heading>Personal info</Heading>
     </Box>
     <Spacer />
-    <Button onClick={() => setEditing(true)} bg='#62DAF2' borderRadius='50px'>Edit</Button>
+    <Button onClick={() => setEditing(true)} bg='#62daf2' borderRadius='50px' color='00232a'>Edit</Button>
   </Flex><Flex>
   <HStack spacing='60px' justify='center'>
       
@@ -30,7 +30,7 @@ return <><Stack justify="spaceAround" px={40} py={10} spacing='15'><>
         <Heading>{userData.name}</Heading>
         <Text>{userData.email}</Text>
         {userData.role && (
-        <Box as='button' borderRadius='md' bg='#bee8f0' color='gray' px={3} h={6}>
+        <Box as='button' borderRadius='60px' bg='#bee8f0' px={3} h={6}>
           {userData.role}
         </Box>
       )} 
