@@ -34,7 +34,7 @@ export function ProfilePage() {
   const [docRef, setDocRef] = useState<any>(null);
   
   useEffect(() => {
-    if (user?.uid) {
+    if (user?.uid && (!docRef || docRef.id !== user.uid)) {
       setDocRef(doc(usersCollectionRef, user.uid));
     }
   }, [user, usersCollectionRef]);
