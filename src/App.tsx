@@ -9,6 +9,7 @@ import MainLayout from './components/layout/MainLayout.tsx';
 import ProfilePage from './components/ProfilePage.tsx';
 import PhotoListPage from './components/PhotoListPage.tsx';
 import AddPhotoPage from './components/AddPhotoPage.tsx';
+import PhotoPage from './components/PhotoPage.tsx';
 
 export const App = () => {
   return (
@@ -20,6 +21,7 @@ export const App = () => {
       <Route path="/profile" element={<ProfilePage />} />
       <Route path="/photolist" element={<PhotoListPage />} />
       <Route path="/add_photo" element={<AddPhotoPage />} />
+      <Route path="/photo" element={<PhotoPage />} />
     </Routes>
   );
 };
