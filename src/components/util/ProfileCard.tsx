@@ -7,13 +7,15 @@ const { userData, setEditing } = props;
 const navigate = useNavigate();
 return <><Stack justify="spaceAround" px={40} py={10} spacing='15' backgroundColor='#f1f7f8' minHeight='100vh' color='00232a'><>
 <Wrap>
+<Box marginRight="10px">
+  <Image src="src/components/util/png_logo.png" alt="Logo" width="45px" height="auto" />
+</Box>
 <Input placeholder='Search your photo' width="70vh" bg='#bee8f0' borderRadius='30px'/>
-<Spacer />
+<Spacer/>
 <Box>
 <Avatar name={userData.name} src={userData.profile_picture} width="40px" height="40px" />
-</Box></Wrap>
-
-
+</Box>
+</Wrap>
 <Flex>
     <Box>
       <Heading>Personal info</Heading>

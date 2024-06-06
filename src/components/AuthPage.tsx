@@ -1,4 +1,4 @@
-import { Box, Button, Center, Flex, Image, Input, Stack, Text, useToast } from '@chakra-ui/react';
+import { Box, Button, Flex, Image, Input, Stack, Text, useToast } from '@chakra-ui/react';
 import { getAuth } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
 import { ChangeEvent, FormEvent, useState } from 'react';
