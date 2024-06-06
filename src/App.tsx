@@ -10,6 +10,7 @@ import ProfilePage from './components/ProfilePage.tsx';
 import PhotoListPage from './components/PhotoListPage.tsx';
 import AddPhotoPage from './components/AddPhotoPage.tsx';
 import PhotoPage from './components/PhotoPage.tsx';
+import EditProfilePage from './components/EditProfilePage.tsx';
 
 export const App = () => {
   return (
@@ -22,6 +23,7 @@ export const App = () => {
       <Route path="/photolist" element={<PhotoListPage />} />
       <Route path="/add_photo" element={<AddPhotoPage />} />
       <Route path="/photo" element={<PhotoPage />} />
+      <Route path="/edit_profile" element={<EditProfilePage />} />
     </Routes>
   );
 };

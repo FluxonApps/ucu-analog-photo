@@ -1,10 +1,11 @@
 import { Box, Button, Image, Flex, Heading, Input, Stack, HStack, Spinner, Text, Avatar, RadioGroup, Radio, Wrap, WrapItem, Center, Spacer, InputLeftElement, InputGroup} from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 
-export const ProfileCard =(props: { userData: any; setEditing: any; }) => {
+export const ProfileCard =(props: { userData: any;}) => {
     console.log(props)
-const { userData, setEditing } = props;
+const { userData } = props;
 const navigate = useNavigate();
+
 return <><Stack justify="spaceAround" px={40} py={10} spacing='15' backgroundColor='#f1f7f8' minHeight='100vh' color='00232a'><>
 <Wrap>
 <Input placeholder='Search your photo' width="70vh" bg='#bee8f0' borderRadius='30px'/>
@@ -19,7 +20,7 @@ return <><Stack justify="spaceAround" px={40} py={10} spacing='15' backgroundCol
       <Heading>Personal info</Heading>
     </Box>
     <Spacer />
-    <Button onClick={() => setEditing(true)} bg='#62daf2' borderRadius='50px' color='00232a'>Edit</Button>
+    <Button onClick={() => navigate('/edit_profile')} bg='#62daf2' borderRadius='50px' color='00232a'>Edit</Button>
   </Flex><Flex>
   <HStack spacing='60px' justify='center'>
       
