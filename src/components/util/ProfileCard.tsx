@@ -1,29 +1,22 @@
-import { Box, Button, Image, Flex, Heading, Input, Stack, HStack, Spinner, Text, Avatar, RadioGroup, Radio, Wrap, WrapItem, Center, Spacer, InputLeftElement, InputGroup, IconButton} from '@chakra-ui/react';
+import { Box, Button, Image, Flex, Heading, Input, Stack, HStack, Spinner, Text, Avatar, RadioGroup, Radio, Wrap, WrapItem, Center, Spacer, InputLeftElement, InputGroup, IconButton, SimpleGrid} from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 import { useAuthState, useSignOut } from 'react-firebase-hooks/auth';
 import { Auth, getAuth } from 'firebase/auth';
 import { AddIcon } from '@chakra-ui/icons';
 import { useCollection, useDocument, } from 'react-firebase-hooks/firestore';
 import { useState } from 'react';
-import { collection, or, query, where } from '@firebase/firestore';
+import { collection, doc, query, where } from '@firebase/firestore';
 import { db, storage } from '../../../firebase.config';
 
 const auth = getAuth();
-export const ProfileCard =(props: { userData: any;}) => {
+export const ProfileCard =(props: { userId:any, userData: any;}) => {
     console.log(props)
-const { userData } = props;
+const { userId, userData } = props;
 const navigate = useNavigate();
 const [signOut, isSigningOut] = useSignOut(auth);
-const [searchValue, setSearchValue] = useState('')
 const usersPhotosCollection = collection(db, 'userPhotos');
 const [userPhotos, loadingUserPhotos, errorLoadingUserPhotos] = useCollection(
-  !searchValue ? query(usersPhotosCollection) : query(usersPhotosCollection, 
-    or(
-      where('location', '==', searchValue), 
-      where('camera_model', '==', searchValue),
-      where('description', '==', searchValue),
-      where('photo_url', '==', searchValue))),
-);
+  query(usersPhotosCollection, where('user', '==', doc(collection(db, 'users'), userId || 'abcd'))))
 
 return <><Stack justify="spaceAround" px={40} py={10} spacing='15' backgroundColor='#f1f7f8' minHeight='100vh' color='00232a'><>
 <Wrap>
@@ -73,30 +66,29 @@ return <><Stack justify="spaceAround" px={40} py={10} spacing='15' backgroundCol
         <Heading>Photos</Heading>
       </Box>
     </Flex><Flex justifyContent='center'>
-
-    <IconButton
-        icon={<AddIcon w={6} h={6} color='00232a' />}
-        h='300px'
-        w='300px'
-        border='2px'
-        borderColor='blue.500'
-        borderRadius='0px'
-        onClick={() => navigate('/add_photo')}
-        aria-label='Add Bottom'
-        
-      >
-      </IconButton>
-      <Spacer />
     
       {loadingUserPhotos ? <Spinner /> : 
-            (userPhotos && userPhotos.docs.map((photo: any) => {
-                const photoData = photo.data();
-                return (
-                    <Box key={photo.id} boxSize='sm'>
-                        <Image src={photoData.photo_url} alt='User Photo' />
-                    </Box>
-                );
-            }))
+        <SimpleGrid columns={3} spacing={10}>
+          <IconButton
+            icon={<AddIcon w={6} h={6} color='00232a' />}
+            h='300px'
+            w='300px'
+            border='2px'
+            borderColor='blue.500'
+            borderRadius='0px'
+            onClick={() => navigate('/add_photo')}
+            aria-label='Add Bottom'
+          >
+          </IconButton>
+          {userPhotos && userPhotos.docs.map((photo) => {
+              const photoData = photo.data();
+              return (
+                  <Box key={photo.id} boxSize='sm'>
+                      <Image boxSize='300px' objectFit='cover' src={photoData.photo_url} alt='User Photo' />
+                  </Box>
+              );
+          })}
+        </SimpleGrid>
         }
       </Flex>
     </Stack></>

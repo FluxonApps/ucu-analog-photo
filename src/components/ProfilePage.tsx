@@ -54,7 +54,7 @@ export function ProfilePage() {
   }
 
   
-  return <ProfileCard userData={userProfile?.data()}></ProfileCard>
+  return <ProfileCard userId={user.uid} userData={userProfile?.data()}></ProfileCard>
 
 }
 
