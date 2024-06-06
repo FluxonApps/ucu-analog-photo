@@ -26,7 +26,7 @@ interface User {
 }
 
 
-export function ProfilePage() {
+export function EditProfilePage() {
   const [user, userLoading] = useAuthState(auth);
   const [signOut, isSigningOut] = useSignOut(auth);
   const usersCollectionRef = collection(db, 'users');
@@ -40,8 +40,15 @@ export function ProfilePage() {
   }, [user, usersCollectionRef]);
   
   const [userProfile, loadingUserProfile] = useDocument(docRef);
+  const [isEditing, setEditing] = useState(false);
 
-
+  const updateUser = async (id: string, newFields: any) => {
+    const userDoc = doc(db, 'users', id);
+    console.log(newFields);
+    setEditing(false);
+    await updateDoc(userDoc, newFields);
+    setEditing(false)
+  };
 
   // Do not show page content until auth state is fetched.
   if (userLoading || loadingUserProfile || !userProfile) {
@@ -53,9 +60,8 @@ export function ProfilePage() {
     return <Navigate to="/auth" replace />;
   }
 
-  
-  return <ProfileCard userData={userProfile?.data()}></ProfileCard>
 
+  return <ProfileForm userUid={user.uid} userData={userProfile?.data()} updateUser={updateUser}/>
 }
 
-export default ProfilePage;
+export default EditProfilePage;

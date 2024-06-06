@@ -1,10 +1,14 @@
 import { Box, Button, Image, Flex, Heading, Input, Stack, HStack, Spinner, Text, Avatar, RadioGroup, Radio, Wrap, WrapItem, Center, Spacer, InputLeftElement, InputGroup} from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
-
-export const ProfileCard =(props: { userData: any; setEditing: any; }) => {
+import { useAuthState, useSignOut } from 'react-firebase-hooks/auth';
+import { Auth, getAuth } from 'firebase/auth';
+const auth = getAuth();
+export const ProfileCard =(props: { userData: any;}) => {
     console.log(props)
-const { userData, setEditing } = props;
+const { userData } = props;
 const navigate = useNavigate();
+const [signOut, isSigningOut] = useSignOut(auth);
+
 return <><Stack justify="spaceAround" px={40} py={10} spacing='15' backgroundColor='#f1f7f8' minHeight='100vh' color='00232a'><>
 <Wrap>
 <Box marginRight="10px">
@@ -21,7 +25,9 @@ return <><Stack justify="spaceAround" px={40} py={10} spacing='15' backgroundCol
       <Heading>Personal info</Heading>
     </Box>
     <Spacer />
-    <Button onClick={() => setEditing(true)} bg='#62daf2' borderRadius='50px' color='00232a'>Edit</Button>
+    <Button onClick={() => navigate('/edit_profile')} bg='#62daf2' borderRadius='50px' color='00232a'>Edit</Button>
+    <Button onClick={signOut} isDisabled={isSigningOut} isLoading={isSigningOut} bg='#62daf2' borderRadius='50px' color='00232a'>Sing out</Button>
+
   </Flex><Flex>
   <HStack spacing='60px' justify='center'>
       
