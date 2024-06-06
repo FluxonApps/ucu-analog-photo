@@ -1,6 +1,6 @@
-import { Box, Button, Image, Flex, Heading, Input, Stack, HStack, Spinner, Text, Avatar, RadioGroup, Radio, Wrap, WrapItem, Center, Spacer, InputLeftElement, InputGroup} from '@chakra-ui/react';
-import { collection, addDoc, updateDoc, deleteDoc, doc, query, CollectionReference } from 'firebase/firestore';
-import { useCollection, useDocument } from 'react-firebase-hooks/firestore';
+import { Box, Button, Image, Flex, Heading, Input, Stack, HStack, Spinner, Text, Avatar, RadioGroup, Radio, Wrap, WrapItem, Center, Spacer, InputLeftElement, InputGroup, InputLeftAddon} from '@chakra-ui/react';
+import { collection, addDoc, updateDoc, deleteDoc, doc, query, CollectionReference, where } from 'firebase/firestore';
+import { useCollection, useDocument, } from 'react-firebase-hooks/firestore';
 import { Auth, getAuth } from 'firebase/auth';
 import {
   getDownloadURL,
@@ -8,13 +8,15 @@ import {
   uploadBytes,
 } from "firebase/storage";
 import { useAuthState, useSignOut } from 'react-firebase-hooks/auth';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 import { db, storage } from '../../firebase.config';
 console.log(storage);
 import { useState } from 'react';
 
 const auth = getAuth();
+
+
 
 interface User {
   id: string;
@@ -23,15 +25,48 @@ interface User {
 }
 const PhotoCard = (props: { userPhotos: any; }) =>  {
     const {userPhotos} = props
+    // const navigate = useNavigate();
+    
     return <div>{userPhotos && userPhotos.docs.map((photo: any) => {
-    console.log(photo.data())
+      console.log(photo.data())
     // console.log(photo.data().user.once())
     const [userProfile, loadingUserProfile, errorLoadingUserProfile] = useDocument(
       photo.data().user
     );
     console.log(userProfile?.data())
-    return <div> <img src={photo.data().photo_url}></img> <div>{photo.data().location} </div> </div>
-  })}</div> }
+    const [input, setInput] = useState('')
+    const handleInput = (event:any) => setInput(event.target.value)
+    const q = query(collection(db, 'userPhotos'), where('location', '==', input))
+    
+    return (
+      
+      <Flex flexDirection={'column'}>
+        <Input value = {input} onChange={handleInput} placeholder='Search'/>
+        <Flex flexDirection={'row'}>
+        <Box> <Avatar src={userProfile?.data().profile_picture} width='50px' height='50px'></Avatar> </Box>
+        <Box> {userProfile?.data().name ? userProfile?.data().name : 'User'}</Box> 
+        <Box> {userProfile?.data().role ? userProfile?.data().role : 'Roleless'}</Box> 
+
+        </Flex>
+        <Flex flexDirection={'column'}>
+        <img src={photo.data().photo_url}width='300px' height='300px'></img>
+        <Box> {photo.data().description ? photo.data().description : ''}</Box>
+        </Flex>
+        <Flex flexDirection={'column'}>
+        <Box>
+        Location: {photo.data().location}
+        </Box>
+        <Box>
+        Camera: {photo.data().camera_model ? photo.data().camera_model : 'Unknown'}
+        </Box>
+        <Box> 
+          Travel Nature
+        </Box>
+        </Flex>
+        <Flex flexDirection={'row'} gap={'5'}> <Button > Comments </Button><Button> Emoji </Button><Button> whateverelse </Button></Flex>
+        </Flex>
+       )
+  })}</div>}
 
 
 function PhotoListPage() {
@@ -49,6 +84,9 @@ function PhotoListPage() {
   // if (userPhotos?.docs.length > 0) {
   //   console.log(userPhotos?.docs[0].data())
   // }
+  if (!user) {
+    return <Navigate to="/auth" replace />;
+  }
   return <PhotoCard userPhotos={userPhotos}/>
   
   const [isEditing, setEditing] = useState(true);
@@ -125,7 +163,7 @@ function PhotoListPage() {
     </RadioGroup>
   </Stack>
   <Button width="50%" size="sm" colorScheme="green" onClick={() => {
-      updateUser(user.uid, { name: newName, profile_picture: newProfilePicture, role: newRole });
+      // updateUser(user.uid, { name: newName, profile_picture: newProfilePicture, role: newRole });
       setEditing(false);
     }}>
     Update User
