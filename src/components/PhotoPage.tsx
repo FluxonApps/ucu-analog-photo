@@ -4,7 +4,7 @@ import { useDocument } from 'react-firebase-hooks/firestore';
 import { getAuth } from 'firebase/auth';
 
 import { useAuthState, useSignOut } from 'react-firebase-hooks/auth';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 
 import { db, storage } from '../../firebase.config';
 
@@ -29,8 +29,13 @@ export function ProfilePage() {
   
   const [userProfile, loadingUserProfile] = useDocument(docRef);
 
+  let { imageId } = useParams();
+
   const [photoAuthor, loadingPhotoAuthor] = useDocument(doc(db, 'users', 'xQbvuayjyZNlasY4pekRHOeU2sE2'));
-  const [userPhoto, loadingUserPhoto] = useDocument(doc(db, 'userPhotos', 'hs6KELRbh2wa0itcXwDL'));
+  if (!imageId) {
+    return <div>Error: No image ID provided</div>;
+  }
+  const [userPhoto, loadingUserPhoto] = useDocument(doc(db, 'userPhotos', imageId));
   console.log(photoAuthor);
   // Do not show page content until auth state is fetched.
   if (userLoading || loadingUserProfile || loadingUserPhoto || loadingPhotoAuthor || !userProfile || !userPhoto || !photoAuthor) {

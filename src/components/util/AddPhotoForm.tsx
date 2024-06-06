@@ -1,4 +1,4 @@
-import { Box, Button, Input, Stack, Avatar, Tag, Checkbox, Image, Card } from '@chakra-ui/react';
+import { Box, Button, Input, Stack, Checkbox, Image } from '@chakra-ui/react';
 import { storage } from '../../../firebase.config';
 import { useState } from 'react';
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";

@@ -25,9 +25,13 @@ export const PhotoCard =(props: { userData: any; userPhoto: any; photoAuthor: an
       lineHeight='tight'
       noOfLines={1}
     >
-      {location}
+
     </Box>
   </Box>
+  <Box fontWeight='semibold'>Description: {description ? description : 'No description'}</Box>
+  <Box fontWeight='semibold'>Location: {location ? location : 'No location'}</Box>
+  <Box fontWeight='semibold'>Camera Model: {camera_model ? camera_model : 'No camera model'}</Box>
+  <Box fontWeight='semibold'>Categories: {userPhoto.categories ? userPhoto.categories.map((category: any) => <Box>{category}</Box>) : 'No categories'}</Box>
 </Box>
 </Box>
 

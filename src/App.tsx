@@ -22,7 +22,7 @@ export const App = () => {
       <Route path="/profile" element={<ProfilePage />} />
       <Route path="/photolist" element={<PhotoListPage />} />
       <Route path="/add_photo" element={<AddPhotoPage />} />
-      <Route path="/photo" element={<PhotoPage />} />
+      <Route path=":imageId" element={<PhotoPage />} />
       <Route path="/edit_profile" element={<EditProfilePage />} />
     </Routes>
   );
