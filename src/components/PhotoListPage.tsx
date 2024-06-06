@@ -24,12 +24,15 @@ interface User {
   mark: number;
 }
 
+
+
 const PhotoListComponent = (props: { userPhotos: any; setSearchValue: any} )=>{
   const {userPhotos, setSearchValue} = props
   console.log(userPhotos)
   if (userPhotos?.docs.length > 0) {
     return <div> {userPhotos && userPhotos.docs.map((photo: any) => {
-      
+      const navigate_photo = useNavigate();
+
       console.log(photo.data())
     const [userProfile, loadingUserProfile, errorLoadingUserProfile] = useDocument(
       photo.data().user
@@ -48,7 +51,7 @@ const PhotoListComponent = (props: { userPhotos: any; setSearchValue: any} )=>{
         <Box> {userProfile?.data().role ? userProfile?.data().role : 'Roleless'}</Box> 
 
         </Flex>
-        <Flex flexDirection={'column'}>
+        <Flex flexDirection={'column'} onClick={()=> {navigate_photo('/photo/'+photo?.id)}}>
         <img src={photo.data().photo_url}width='300px' height='300px'></img>
         <Box> {photo.data().description ? photo.data().description : ''}</Box>
         </Flex>
