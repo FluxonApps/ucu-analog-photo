@@ -1,24 +1,35 @@
-import { Box, Button, Image, Flex, Heading, Input, Stack, HStack, Spinner, Text, Avatar, RadioGroup, Radio, Wrap, WrapItem, Center, Spacer, InputLeftElement, InputGroup} from '@chakra-ui/react';
-
-
-export const ProfileCard =(props: { userData: any; setEditing: any; }) => {
+import { Box, Button, Image, Flex, Heading, Input, Stack, HStack, Spinner, Text, Avatar, RadioGroup, Radio, Wrap, WrapItem, Center, Spacer, InputLeftElement, InputGroup, IconButton} from '@chakra-ui/react';
+import { useNavigate } from 'react-router-dom';
+import { useAuthState, useSignOut } from 'react-firebase-hooks/auth';
+import { Auth, getAuth } from 'firebase/auth';
+import { AddIcon } from '@chakra-ui/icons';
+const auth = getAuth();
+export const ProfileCard =(props: { userData: any;}) => {
     console.log(props)
-const { userData, setEditing } = props;
+const { userData } = props;
+const navigate = useNavigate();
+const [signOut, isSigningOut] = useSignOut(auth);
+
 return <><Stack justify="spaceAround" px={40} py={10} spacing='15' backgroundColor='#f1f7f8' minHeight='100vh' color='00232a'><>
 <Wrap>
+<Box marginRight="10px">
+  <Image src="src/components/util/png_logo.png" alt="Logo" width="45px" height="auto" />
+</Box>
 <Input placeholder='Search your photo' width="70vh" bg='#bee8f0' borderRadius='30px'/>
-<Spacer />
+<Spacer/>
 <Box>
 <Avatar name={userData.name} src={userData.profile_picture} width="40px" height="40px" />
-</Box></Wrap>
-
-
+</Box>
+</Wrap>
 <Flex>
     <Box>
       <Heading>Personal info</Heading>
     </Box>
     <Spacer />
-    <Button onClick={() => setEditing(true)} bg='#62daf2' borderRadius='50px' color='00232a'>Edit</Button>
+    <Wrap spacing="10px">
+    <Button onClick={() => navigate('/edit_profile')} bg='#62daf2' borderRadius='50px' color='00232a'>Edit</Button>
+    <Button onClick={signOut} isDisabled={isSigningOut} isLoading={isSigningOut} bg='#62daf2' borderRadius='50px' color='00232a'>Sign out</Button>
+    </Wrap>
   </Flex><Flex>
   <HStack spacing='60px' justify='center'>
       
@@ -48,17 +59,18 @@ return <><Stack justify="spaceAround" px={40} py={10} spacing='15' backgroundCol
       </Box>
     </Flex><Flex justifyContent='center'>
 
-    <Button
-        height='300px'
-        width='300px'
+    <IconButton
+        icon={<AddIcon w={6} h={6} color='00232a' />}
+        h='300px'
+        w='300px'
         border='2px'
         borderColor='blue.500'
         borderRadius='0px'
+        onClick={() => navigate('/add_photo')}
+        aria-label='Add Bottom'
+        
       >
-      <svg xmlns="http://www.w3.org/2000/svg" width="70" height="70" fill="currentColor" className="bi bi-plus" viewBox="0 0 16 16">
-        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
-      </svg>
-      </Button>
+      </IconButton>
       <Spacer />
       <Box boxSize='sm'>
         <Image src='https://bit.ly/dan-abramov' alt='Dan Abramov' />

@@ -1,14 +1,15 @@
-import { Box, Button, Image, Flex, Heading, Input, Stack, HStack, Spinner, Text, Avatar, RadioGroup, Radio, Wrap, WrapItem, Center, Card } from '@chakra-ui/react';
-
+import { Box, Button, Image, Flex, Heading, Input, Stack, HStack, Spinner, Text, Avatar, RadioGroup, Radio, Wrap, WrapItem, Center, Card, IconButton} from '@chakra-ui/react';
+import { ArrowBackIcon, ArrowLeftIcon } from '@chakra-ui/icons';
 import {
   getDownloadURL,
   ref,
   uploadBytes,
 } from "firebase/storage";
-
+import { useNavigate } from 'react-router-dom';
 
 import { storage } from '../../../firebase.config';
 import { useState } from 'react';
+import ProfilePage from '../ProfilePage';
 
 export const ProfileForm = (props: { userUid: any; userData: any; updateUser: any; }) => {
     const {userUid, userData, updateUser} = props;
@@ -16,21 +17,24 @@ export const ProfileForm = (props: { userUid: any; userData: any; updateUser: an
     const [newProfilePicture, setNewProfilePicture] = useState(userData.profile_picture);
     const [newRole, setNewRole] = useState(userData.role);
     const [isEditingProfilePicture, setEditingProfilePicture] = useState(false);
+    const navigate = useNavigate();
     return <Center minHeight="100vh" backgroundColor="#f0f4f8">
     <Card
       align='center'
-      width="80vh"
-      maxWidth="80vh"
-      height="70vh"
-      p='8vh'
+      px='8vh'
+      pb='6vh'
+      pt='3vh'
       border='medium'
       color='#00232a'
       borderRadius='20px'
     >
       <Stack justify="center" spacing='35'>
-      <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" className="bi bi-arrow-left-circle" viewBox="0 0 16 16" color='00232a'>
-  <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8m15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5z"/>
-</svg>
+      <IconButton 
+      icon={<ArrowBackIcon w={6} h={6} color='00232a' />}
+      w={2} h={10} borderRadius='100px' variant='outline'  colorScheme='#f0f4f8'
+      bg="none" align='right'
+      onClick={()=> { console.log('here'); navigate('/auth')}}/>
+
       {isEditingProfilePicture ?
         <Input
           onChange={async (event) => {

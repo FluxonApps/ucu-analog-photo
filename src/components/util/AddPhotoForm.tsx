@@ -1,4 +1,4 @@
-import { Box, Button, Input, Stack, Avatar } from '@chakra-ui/react';
+import { Box, Button, Input, Stack, Checkbox, Image } from '@chakra-ui/react';
 import { storage } from '../../../firebase.config';
 import { useState } from 'react';
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
@@ -16,6 +16,14 @@ export const AddPhotoForm = (props: { addPhotoButton: any }) => {
     const [isEditingPhoto, setEditingPhoto] = useState(false);
 
     const navigate = useNavigate();
+
+      
+    const [isShowingNewCategoryInput, showCategoryInput] = useState(false);
+    const [newCategory, setNewCategory] = useState('');
+    const [categoryList, setCategoryList] = useState(['Nature', 'Traveling']);
+    const [choosedCategories, setChoosedCategories] = useState<string[]>([]);
+    
+
 
     return <Box>
         <Button onClick={() => navigate('/profile')}>{'<-'}</Button>
@@ -35,8 +43,41 @@ export const AddPhotoForm = (props: { addPhotoButton: any }) => {
           type="file"
           size="sm"
         /> :
-        <Avatar src={newPhoto} width="100px" height="100px" onClick={() => setEditingPhoto(true)}/>
+        <Box width={600} >
+        <Image src={newPhoto || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTR0ydDiYMYriRcJDdqE8NZxnRisT4XZmc7AQ&s'} width={'auto'} height={'auto'} maxWidth={600} maxHeight={600} border={'2px solid black'} onClick={() => setEditingPhoto(true)} />
+        </Box>
       }
+    <Box>Choose Categories</Box>
+    <Box p={6}>
+        { isShowingNewCategoryInput ?
+            <Box><Input
+            onChange={(event) => {
+            setNewCategory(event.target.value);
+            }}
+            placeholder="Name..."
+            size="sm"
+        />
+        <Button onClick={() => {
+            const newCategoryList = [newCategory, ...categoryList];
+            if (newCategory) {
+            setCategoryList(newCategoryList)
+            }
+            showCategoryInput(false)
+            }}>+</Button></Box>
+        :
+
+        <Button m={6} onClick={() => { showCategoryInput(true) }}>+</Button>
+
+        }
+        {categoryList.map((category) => <Checkbox colorScheme='blue' m={6} onChange={(event) => {
+            if (event.target.checked) {
+                setChoosedCategories([...choosedCategories, category]);
+            } else {
+                setChoosedCategories(choosedCategories.filter((item) => item !== category));
+            }
+        }
+        }>{category}</Checkbox>)}
+    </Box>
       <Input
         defaultValue={newDescription}
         onChange={(event) => {
@@ -63,7 +104,7 @@ export const AddPhotoForm = (props: { addPhotoButton: any }) => {
       />
       </Stack>
       <Button width="50%" size="sm" colorScheme="green" onClick={() => {
-        addPhotoButton({description: newDescription || '', location: newLocation || '', camera_model: newCameraModel || '', photo_url: newPhoto || '' });
+        addPhotoButton({description: newDescription || '', location: newLocation || '', camera_model: newCameraModel || '', photo_url: newPhoto || '', categories: choosedCategories});
         }}>
       Add Photo
       </Button></Box>
