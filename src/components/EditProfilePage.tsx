@@ -9,6 +9,8 @@ import {
 } from "firebase/storage";
 import { useAuthState, useSignOut } from 'react-firebase-hooks/auth';
 import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+
 
 import { db, storage } from '../../firebase.config';
 console.log(storage);
@@ -16,6 +18,7 @@ console.log(storage);
 import { useEffect, useState } from 'react';
 import { ProfileForm } from './util/ProfileForm';
 import { ProfileCard } from './util/ProfileCard';
+
 
 const auth = getAuth();
 
@@ -41,6 +44,7 @@ export function EditProfilePage() {
   
   const [userProfile, loadingUserProfile] = useDocument(docRef);
   const [isEditing, setEditing] = useState(false);
+  const navigate = useNavigate();
 
   const updateUser = async (id: string, newFields: any) => {
     const userDoc = doc(db, 'users', id);
@@ -48,6 +52,7 @@ export function EditProfilePage() {
     setEditing(false);
     await updateDoc(userDoc, newFields);
     setEditing(false)
+    navigate('/profile');
   };
 
   // Do not show page content until auth state is fetched.
