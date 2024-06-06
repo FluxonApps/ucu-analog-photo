@@ -1,7 +1,8 @@
-import { Box, Button, Image, Flex, Heading, Input, Stack, HStack, Spinner, Text, Avatar, RadioGroup, Radio, Wrap, WrapItem, Center, Spacer, InputLeftElement, InputGroup} from '@chakra-ui/react';
+import { Box, Button, Image, Flex, Heading, Input, Stack, HStack, Spinner, Text, Avatar, RadioGroup, Radio, Wrap, WrapItem, Center, Spacer, InputLeftElement, InputGroup, IconButton} from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 import { useAuthState, useSignOut } from 'react-firebase-hooks/auth';
 import { Auth, getAuth } from 'firebase/auth';
+import { AddIcon } from '@chakra-ui/icons';
 const auth = getAuth();
 export const ProfileCard =(props: { userData: any;}) => {
     console.log(props)
@@ -25,9 +26,10 @@ return <><Stack justify="spaceAround" px={40} py={10} spacing='15' backgroundCol
       <Heading>Personal info</Heading>
     </Box>
     <Spacer />
+    <Wrap spacing="10px">
     <Button onClick={() => navigate('/edit_profile')} bg='#62daf2' borderRadius='50px' color='00232a'>Edit</Button>
-    <Button onClick={signOut} isDisabled={isSigningOut} isLoading={isSigningOut} bg='#62daf2' borderRadius='50px' color='00232a'>Sing out</Button>
-
+    <Button onClick={signOut} isDisabled={isSigningOut} isLoading={isSigningOut} bg='#62daf2' borderRadius='50px' color='00232a'>Sign out</Button>
+    </Wrap>
   </Flex><Flex>
   <HStack spacing='60px' justify='center'>
       
@@ -57,15 +59,18 @@ return <><Stack justify="spaceAround" px={40} py={10} spacing='15' backgroundCol
       </Box>
     </Flex><Flex justifyContent='center'>
 
-    <Button
-        height='300px'
-        width='300px'
+    <IconButton
+        icon={<AddIcon w={6} h={6} color='00232a' />}
+        h='300px'
+        w='300px'
         border='2px'
         borderColor='blue.500'
         borderRadius='0px'
         onClick={() => navigate('/add_photo')}
+        aria-label='Add Bottom'
+        
       >
-      </Button>
+      </IconButton>
       <Spacer />
       <Box boxSize='sm'>
         <Image src='https://bit.ly/dan-abramov' alt='Dan Abramov' />
