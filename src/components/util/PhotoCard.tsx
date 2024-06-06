@@ -7,8 +7,8 @@ import { useDocument } from 'react-firebase-hooks/firestore';
 
 
 
-export const PhotoCard =(props: { userData: any; userPhoto: any; photoAuthor: any; }) => {
-  const { userData, userPhoto, photoAuthor } = props;
+export const PhotoCard =(props: { userPhoto: any; photoAuthor: any; }) => {
+  const { userPhoto, photoAuthor } = props;
   const { camera_model, description, location, photo_url, user } = userPhoto;
   const { email, role, name, profile_picture} = photoAuthor;
   const navigate = useNavigate();
@@ -40,7 +40,7 @@ export const PhotoCard =(props: { userData: any; userPhoto: any; photoAuthor: an
         <Text color='#005465' bg='#C6EFF6' borderRadius='10px' px='15px' py='7px' fontWeight="medium" border='2px solid #005465' >❤️ 25</Text>
       </HStack>
       <Flex p='10px' alignItems='center'>
-        <Avatar src={userData.profile_picture} size='sm' />
+        {/* <Avatar src={userData.profile_picture} size='sm' /> */}
         <InputGroup ml='10px'>
           <Input type='text' color='#00232a' placeholder='Write a comment...' bg='#C6EFF6' maxWidth="700px" height="50px"/>
         </InputGroup>
