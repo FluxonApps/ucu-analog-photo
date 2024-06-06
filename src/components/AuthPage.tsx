@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Input, Stack, Text, useToast } from '@chakra-ui/react';
+import { Box, Button, Center, Flex, Image, Input, Stack, Text, useToast } from '@chakra-ui/react';
 import { getAuth } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
 import { ChangeEvent, FormEvent, useState } from 'react';
@@ -89,25 +89,29 @@ const AuthPage = () => {
 
   // Check if user is already signed in. If yes, redirect to main app.
   if (user) {
-    return <Navigate to="/dashboard" replace />;
+    return <Navigate to="/profile" replace />;
   }
 
   return (
     <MainLayout>
-      <Flex w="full" h="full" alignItems="center" justifyContent="space-between">
+      <Flex w="full" h="full" alignItems="center" justifyContent="center" bgGradient="linear(to-r, #62DAF2, #BEE8F0)">
         <Box mx="auto" as="form" onSubmit={handleAuth}>
-          <Stack spacing={4} w={500} bg="white" rounded="md" p={8}>
-            <Text fontSize="2xl">{showSignIn ? 'Sign in' : 'Sign up'}</Text>
-            <Input placeholder="Email" type="email" onChange={handleEmailChange} value={email} required />
+          <Box mt={4} textAlign="center" display="flex" alignItems="center" justifyContent="center">
+            <Image src="src\components\png_logo.png" alt="Logo" mb={4} maxWidth={130}/>
+          </Box>
+          <Stack spacing={4} w={500} bg="#f1f7f8" rounded="md" p={8} alignItems="center">
+            <Text fontSize="3xl" fontWeight="bold" color="#00232A">{showSignIn ? 'Sign in' : 'Sign up'}</Text>
+            <Input placeholder="Email" type="email" bg="#C6EFF6" onChange={handleEmailChange} value={email} required/>
             <Input
               placeholder="Password"
               type="password"
+              bg="#C6EFF6"
               onChange={handlePasswordChange}
               value={password}
               minLength={6}
               required
             />
-            <Button type="submit" colorScheme="blue" isDisabled={loading} isLoading={loading}>
+            <Button type="submit" bg="#62DAF2" color='white' _hover={{ bg: '#005465' }}  isDisabled={loading} isLoading={loading} size="lg" h="30px" w="full" py={6}>
               Submit
             </Button>
             <Button
