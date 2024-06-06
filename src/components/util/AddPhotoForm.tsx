@@ -105,6 +105,7 @@ export const AddPhotoForm = (props: { addPhotoButton: any }) => {
       </Stack>
       <Button width="50%" size="sm" colorScheme="green" onClick={() => {
         addPhotoButton({description: newDescription || '', location: newLocation || '', camera_model: newCameraModel || '', photo_url: newPhoto || '', categories: choosedCategories});
+        navigate('/profile');
         }}>
       Add Photo
       </Button></Box>
