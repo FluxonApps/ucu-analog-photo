@@ -83,7 +83,7 @@ return <><Stack justify="spaceAround" px={40} py={10} spacing='15' backgroundCol
           {userPhotos && userPhotos.docs.map((photo) => {
               const photoData = photo.data();
               return (
-                  <Box key={photo.id} boxSize='sm'>
+                  <Box onClick={() => navigate('/photo/'+photo?.id)} key={photo.id} boxSize='sm'>
                       <Image boxSize='300px' objectFit='cover' src={photoData.photo_url} alt='User Photo' />
                   </Box>
               );
