@@ -1,5 +1,5 @@
 import { Box, Button, Image, Flex, Heading, Input, Stack, HStack, Spinner, Text, Avatar, RadioGroup, Radio, Wrap, WrapItem, Center, Spacer, InputLeftElement, InputGroup, InputLeftAddon} from '@chakra-ui/react';
-import { collection, addDoc, updateDoc, deleteDoc, doc, query, CollectionReference, where } from 'firebase/firestore';
+import { collection, addDoc, updateDoc, deleteDoc, doc, query, CollectionReference, where, or } from 'firebase/firestore';
 import { useCollection, useDocument, } from 'react-firebase-hooks/firestore';
 import { Auth, getAuth } from 'firebase/auth';
 import {
@@ -23,25 +23,26 @@ interface User {
   name: string;
   mark: number;
 }
-const PhotoCard = (props: { userPhotos: any; }) =>  {
-    const {userPhotos} = props
-    // const navigate = useNavigate();
-    
-    return <div>{userPhotos && userPhotos.docs.map((photo: any) => {
+
+const PhotoListComponent = (props: { userPhotos: any; setSearchValue: any} )=>{
+  const {userPhotos, setSearchValue} = props
+  console.log(userPhotos)
+  if (userPhotos?.docs.length > 0) {
+    return <div> {userPhotos && userPhotos.docs.map((photo: any) => {
+      
       console.log(photo.data())
     // console.log(photo.data().user.once())
     const [userProfile, loadingUserProfile, errorLoadingUserProfile] = useDocument(
       photo.data().user
     );
     console.log(userProfile?.data())
-    const [input, setInput] = useState('')
-    const handleInput = (event:any) => setInput(event.target.value)
-    const q = query(collection(db, 'userPhotos'), where('location', '==', input))
+   
+   
     
     return (
       
       <Flex flexDirection={'column'}>
-        <Input value = {input} onChange={handleInput} placeholder='Search'/>
+        
         <Flex flexDirection={'row'}>
         <Box> <Avatar src={userProfile?.data().profile_picture} width='50px' height='50px'></Avatar> </Box>
         <Box> {userProfile?.data().name ? userProfile?.data().name : 'User'}</Box> 
@@ -66,7 +67,23 @@ const PhotoCard = (props: { userPhotos: any; }) =>  {
         <Flex flexDirection={'row'} gap={'5'}> <Button > Comments </Button><Button> Emoji </Button><Button> whateverelse </Button></Flex>
         </Flex>
        )
-  })}</div>}
+  })} </div>
+  }
+  else {
+    return <div> no photos </div>
+  }
+
+}
+
+
+const PhotoCard = (props: { userPhotos: any; setSearchValue: any}) =>  {
+    const {userPhotos, setSearchValue} = props
+    // return <div> <PhotoListComponent userPhotos={userPhotos} setSearchValue={setSearchValue}/></div>
+    // const navigate = useNavigate();
+    const handleInput = (event:any) => setSearchValue(event.target.value)
+    return <div><Input onChange={handleInput} placeholder='Search'/>
+    <div> <PhotoListComponent userPhotos={userPhotos} setSearchValue={setSearchValue}/></div>
+    </div>}
 
 
 function PhotoListPage() {
@@ -75,19 +92,16 @@ function PhotoListPage() {
   const usersCollectionRef = collection(db, 'users');
   const [userProfile, loadingUserProfile, errorLoadingUserProfile] = useDocument(
     doc(usersCollectionRef, user?.uid || 'asdf')
-  );
-
+  );  
+  const [searchValue, setSearchValue] = useState('')
   const usersPhotosCollection = collection(db, 'userPhotos');
   const [userPhotos, loadingUserPhotos, errorLoadingUserPhotos] = useCollection(
-    usersPhotosCollection
+    searchValue ? query(usersPhotosCollection) : query(usersPhotosCollection, or(where('location', '==', searchValue), where('camera_model', '==', searchValue),where('description', '==', searchValue),where('photo_url', '==', searchValue)))
   );
-  // if (userPhotos?.docs.length > 0) {
-  //   console.log(userPhotos?.docs[0].data())
-  // }
   if (!user) {
     return <Navigate to="/auth" replace />;
   }
-  return <PhotoCard userPhotos={userPhotos}/>
+  return <PhotoCard setSearchValue = {setSearchValue} userPhotos={userPhotos}/>
   
   const [isEditing, setEditing] = useState(true);
 
