@@ -96,7 +96,7 @@ function PhotoListPage() {
   const [searchValue, setSearchValue] = useState('')
   const usersPhotosCollection = collection(db, 'userPhotos');
   const [userPhotos, loadingUserPhotos, errorLoadingUserPhotos] = useCollection(
-    searchValue ? query(usersPhotosCollection) : query(usersPhotosCollection, or(where('location', '==', searchValue), where('camera_model', '==', searchValue),where('description', '==', searchValue),where('photo_url', '==', searchValue)))
+    !searchValue ? query(usersPhotosCollection) : query(usersPhotosCollection, or(where('location', '==', searchValue), where('camera_model', '==', searchValue),where('description', '==', searchValue),where('photo_url', '==', searchValue)))
   );
   if (!user) {
     return <Navigate to="/auth" replace />;
