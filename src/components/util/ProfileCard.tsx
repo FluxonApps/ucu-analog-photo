@@ -3,12 +3,27 @@ import { useNavigate } from 'react-router-dom';
 import { useAuthState, useSignOut } from 'react-firebase-hooks/auth';
 import { Auth, getAuth } from 'firebase/auth';
 import { AddIcon } from '@chakra-ui/icons';
+import { useCollection, useDocument, } from 'react-firebase-hooks/firestore';
+import { useState } from 'react';
+import { collection, or, query, where } from '@firebase/firestore';
+import { db, storage } from '../../../firebase.config';
+
 const auth = getAuth();
 export const ProfileCard =(props: { userData: any;}) => {
     console.log(props)
 const { userData } = props;
 const navigate = useNavigate();
 const [signOut, isSigningOut] = useSignOut(auth);
+const [searchValue, setSearchValue] = useState('')
+const usersPhotosCollection = collection(db, 'userPhotos');
+const [userPhotos, loadingUserPhotos, errorLoadingUserPhotos] = useCollection(
+  !searchValue ? query(usersPhotosCollection) : query(usersPhotosCollection, 
+    or(
+      where('location', '==', searchValue), 
+      where('camera_model', '==', searchValue),
+      where('description', '==', searchValue),
+      where('photo_url', '==', searchValue))),
+);
 
 return <><Stack justify="spaceAround" px={40} py={10} spacing='15' backgroundColor='#f1f7f8' minHeight='100vh' color='00232a'><>
 <Wrap>
@@ -72,17 +87,17 @@ return <><Stack justify="spaceAround" px={40} py={10} spacing='15' backgroundCol
       >
       </IconButton>
       <Spacer />
-      <Box boxSize='sm'>
-        <Image src='https://bit.ly/dan-abramov' alt='Dan Abramov' />
-      </Box>
-      <Spacer />
-      <Box boxSize='sm'>
-        <Image src='https://bit.ly/dan-abramov' alt='Dan Abramov' />
-      </Box>
-      <Spacer />
-      <Box boxSize='sm'>
-        <Image src='https://bit.ly/dan-abramov' alt='Dan Abramov' />
-      </Box>
-    </Flex>
+    
+      {loadingUserPhotos ? <Spinner /> : 
+            (userPhotos && userPhotos.docs.map((photo: any) => {
+                const photoData = photo.data();
+                return (
+                    <Box key={photo.id} boxSize='sm'>
+                        <Image src={photoData.photo_url} alt='User Photo' />
+                    </Box>
+                );
+            }))
+        }
+      </Flex>
     </Stack></>
     }
