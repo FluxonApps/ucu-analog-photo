@@ -77,7 +77,7 @@ const PhotoListComponent = (props: { userPhotos: any; setSearchValue: any} )=>{
   })} </div>
   }
   else {
-    return <div> no photos </div>
+    return <div> No photos match the search</div>
   }
 
 }
@@ -102,7 +102,7 @@ function PhotoListPage() {
   );  
   const [searchValue, setSearchValue] = useState('')
   const usersPhotosCollection = collection(db, 'userPhotos');
-  let clause = or(where('location', '==', searchValue), where('categories', '==', searchValue), where('camera_model', '==', searchValue),where('description', '==', searchValue),where('photo_url', '==', searchValue))
+  let clause = or(where('location', '==', searchValue), where('categories', 'array-contains', searchValue), where('camera_model', '==', searchValue),where('description', '==', searchValue),where('photo_url', '==', searchValue))
   const [userPhotos, loadingUserPhotos, errorLoadingUserPhotos] = useCollection(
     !searchValue ? query(usersPhotosCollection) : query(usersPhotosCollection, clause)
   );

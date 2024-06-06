@@ -33,7 +33,7 @@ export const ProfileForm = (props: { userUid: any; userData: any; updateUser: an
       icon={<ArrowBackIcon w={6} h={6} color='00232a' />}
       w={2} h={10} borderRadius='100px' variant='outline'  colorScheme='#f0f4f8'
       bg="none" align='right'
-      onClick={()=> { console.log('here'); navigate('/auth')}}/>
+      onClick={()=> { console.log('here'); navigate('/profile')}}/>
 
       {isEditingProfilePicture ?
         <Input
