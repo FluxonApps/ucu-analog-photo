@@ -31,7 +31,6 @@ const PhotoListComponent = (props: { userPhotos: any; setSearchValue: any} )=>{
     return <div> {userPhotos && userPhotos.docs.map((photo: any) => {
       
       console.log(photo.data())
-    // console.log(photo.data().user.once())
     const [userProfile, loadingUserProfile, errorLoadingUserProfile] = useDocument(
       photo.data().user
     );

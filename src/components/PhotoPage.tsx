@@ -9,15 +9,13 @@ import { PhotoCard } from './util/PhotoCard';
 
 const auth = getAuth();
 
-export function ProfilePage() {
+export function PhotoPage() {
   const [user, userLoading] = useAuthState(auth);  
   let { imageId } = useParams();
   console.log('imageId:', imageId);
   const [userPhoto, loadingUserPhoto] = useDocument(doc(db, 'userPhotos', imageId || 'abc'));
   console.log('userPhoto data:', userPhoto?.data());
-  // console.log(userPhoto);
-  const [photoAuthor, loadingPhotoAuthor] = useDocument(doc(db, 'users', userPhoto?.data()?.user || 'abc'));
-
+  const [photoAuthor, loadingPhotoAuthor] = useDocument(userPhoto?.data()?.user);
 
   if (!imageId && !userPhoto && !photoAuthor) {
     return <div>Error: No image ID provided</div>;
@@ -33,9 +31,7 @@ export function ProfilePage() {
   if (!user) {
     return <Navigate to="/auth" replace />;
   }
-
-
   return <PhotoCard userPhoto={userPhoto?.data()} photoAuthor={photoAuthor?.data()}></PhotoCard>
 }
 
-export default ProfilePage;
+export default PhotoPage;
