@@ -1,6 +1,6 @@
-import { Box, Button, Image, Flex, Heading, Input, Stack, HStack, Spinner, Text, Avatar, RadioGroup, Radio, Wrap, WrapItem, Center, Spacer, InputLeftElement, InputGroup} from '@chakra-ui/react';
-import { collection, addDoc, updateDoc, deleteDoc, doc, query, CollectionReference } from 'firebase/firestore';
-import { useCollection, useDocument } from 'react-firebase-hooks/firestore';
+import { Box, Button, Image, Flex, Heading, Input, Stack, HStack, Spinner, Text, Avatar, RadioGroup, Radio, Wrap, WrapItem, Center, Spacer, InputLeftElement, InputGroup, InputLeftAddon} from '@chakra-ui/react';
+import { collection, addDoc, updateDoc, deleteDoc, doc, query, CollectionReference, where } from 'firebase/firestore';
+import { useCollection, useDocument, } from 'react-firebase-hooks/firestore';
 import { Auth, getAuth } from 'firebase/auth';
 import {
   getDownloadURL,
@@ -34,10 +34,14 @@ const PhotoCard = (props: { userPhotos: any; }) =>  {
       photo.data().user
     );
     console.log(userProfile?.data())
+    const [input, setInput] = useState('')
+    const handleInput = (event:any) => setInput(event.target.value)
+    const q = query(collection(db, 'userPhotos'), where('location', '==', input))
     
     return (
       
       <Flex flexDirection={'column'}>
+        <Input value = {input} onChange={handleInput} placeholder='Search'/>
         <Flex flexDirection={'row'}>
         <Box> <Avatar src={userProfile?.data().profile_picture} width='50px' height='50px'></Avatar> </Box>
         <Box> {userProfile?.data().name ? userProfile?.data().name : 'User'}</Box> 
