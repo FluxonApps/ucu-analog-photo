@@ -1,18 +1,26 @@
-import { Box, Button, Image, Flex, Heading, Input, Stack, HStack, Spinner, Text, Avatar, RadioGroup, Radio, Wrap, WrapItem, Center, Spacer, InputLeftElement, InputGroup} from '@chakra-ui/react';
-import { useDocument } from 'react-firebase-hooks/firestore';
-
-//
-//
+import { Box, Image, IconButton} from '@chakra-ui/react';
+import { useNavigate } from 'react-router-dom';
+import { ArrowBackIcon } from '@chakra-ui/icons';
 
 
-export const PhotoCard =(props: { userData: any; userPhoto: any; photoAuthor: any; }) => {
-  const { userData, userPhoto, photoAuthor } = props;
+
+
+export const PhotoCard =(props: { userPhoto: any; photoAuthor: any; }) => {
+  const { userPhoto, photoAuthor } = props;
   const { camera_model, description, location, photo_url, user } = userPhoto;
   const { email, role, name, profile_picture} = photoAuthor;
+  const navigate = useNavigate();
   console.log(camera_model, description, location, photo_url);
   console.log(email, role, name, profile_picture);
 
   return <Box maxW='sm' borderWidth='1px' borderRadius='lg' overflow='hidden'>
+
+    <IconButton 
+      icon={<ArrowBackIcon w={6} h={6} color='00232a' />}
+      w={2} h={10} borderRadius='100px' variant='outline' colorScheme='#f0f4f8'
+      bg="none"
+      onClick={() => { console.log('here'); navigate('/auth'); } } aria-label={''}/>
+
   <Image src={photo_url} />
 
   <Box p='6'>
