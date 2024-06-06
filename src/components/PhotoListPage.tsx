@@ -60,8 +60,9 @@ const PhotoListComponent = (props: { userPhotos: any; setSearchValue: any} )=>{
         <Box>
         Camera: {photo.data().camera_model ? photo.data().camera_model : 'Unknown'}
         </Box>
-        <Box> 
-          Travel Nature
+        <Box>
+          {console.log(photo.data().categories)}
+          Category: {photo.data().categories  ? photo.data().categories.join(', ') : 'None'}
         </Box>
         </Flex>
         <Flex flexDirection={'row'} gap={'5'}> <Button > Comments </Button><Button> Emoji </Button><Button> whateverelse </Button></Flex>
@@ -95,8 +96,9 @@ function PhotoListPage() {
   );  
   const [searchValue, setSearchValue] = useState('')
   const usersPhotosCollection = collection(db, 'userPhotos');
+  let clause = or(where('location', '==', searchValue), where('categories', '==', searchValue), where('camera_model', '==', searchValue),where('description', '==', searchValue),where('photo_url', '==', searchValue))
   const [userPhotos, loadingUserPhotos, errorLoadingUserPhotos] = useCollection(
-    !searchValue ? query(usersPhotosCollection) : query(usersPhotosCollection, or(where('location', '==', searchValue), where('camera_model', '==', searchValue),where('description', '==', searchValue),where('photo_url', '==', searchValue)))
+    !searchValue ? query(usersPhotosCollection) : query(usersPhotosCollection, clause)
   );
   if (!user) {
     return <Navigate to="/auth" replace />;

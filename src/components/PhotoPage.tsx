@@ -31,7 +31,7 @@ export function ProfilePage() {
 
   let { imageId } = useParams();
 
-  const [photoAuthor, loadingPhotoAuthor] = useDocument(doc(db, 'users', 'xQbvuayjyZNlasY4pekRHOeU2sE2'));
+  const [photoAuthor, loadingPhotoAuthor] = useDocument(doc(db, 'users', 'NM1vUvGJ5JVg7OfggsJIcYnheyi1'));
   if (!imageId) {
     return <div>Error: No image ID provided</div>;
   }
