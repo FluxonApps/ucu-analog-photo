@@ -12,6 +12,7 @@ import { Navigate } from 'react-router-dom';
 import { db } from '../../firebase.config.ts';
 
 import MainLayout from './layout/MainLayout.tsx';
+import imgUrl from './util/png_logo.png';
 
 const auth = getAuth();
 
@@ -97,7 +98,7 @@ const AuthPage = () => {
       <Flex w="full" h="full" alignItems="center" justifyContent="center" bgGradient="linear(to-r, #62DAF2, #BEE8F0)">
         <Box mx="auto" as="form" onSubmit={handleAuth}>
           <Box mt={4} textAlign="center" display="flex" alignItems="center" justifyContent="center">
-            <Image src="src/components/util/png_logo.png" alt="Logo" mb={4} maxWidth={130}/>
+            <Image src={imgUrl} alt="Logo" mb={4} maxWidth={130}/>
           </Box>
           <Stack spacing={4} w={500} bg="#f1f7f8" rounded="md" p={8} alignItems="center">
             <Text fontSize="3xl" fontWeight="bold" color="#00232A">{showSignIn ? 'Sign in' : 'Sign up'}</Text>
