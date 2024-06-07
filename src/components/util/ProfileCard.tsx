@@ -25,6 +25,8 @@ return <><Stack justify="spaceAround" px={40} py={10} spacing='15' backgroundCol
   <Image src={imgUrl} alt="Logo" width="45px" height="auto" />
 </Box>
 <Input placeholder='Search your photo' width="70vh" bg='#bee8f0' borderRadius='30px'/>
+
+<Button onClick={() => navigate('/')} bg='#62daf2' borderRadius='50px' bg='#bee8f0' color='00232a'>Home</Button>  
 <Spacer/>
 <Box>
 <Avatar name={userData.name} src={userData.profile_picture} width="40px" height="40px" />
