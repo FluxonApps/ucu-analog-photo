@@ -38,7 +38,14 @@ const PhotoListComponent = (props: { userPhotos: any; setSearchValue: any} )=>{
       photo.data().user
     );
     console.log(userProfile?.data())
-    
+    const ReactionsObject:any= {
+      '😊':0,
+      '❤️':0,
+      '🗿':0,
+      '😱':0
+    }
+    console.log(Object.keys(ReactionsObject))
+    const [reactions, setReactions] = useState(ReactionsObject)
     return (
       
       <Flex flexDirection={'column'} pt="30px" pl="40px" color='#005465' bg='#F1F7F8'>
@@ -69,8 +76,9 @@ const PhotoListComponent = (props: { userPhotos: any; setSearchValue: any} )=>{
         </Flex>
         <Flex flexDirection={'row'} gap={'3'}> <Button bg='' _hover={{bg:'#C6EFF6'}}><Image src='src\components\util\add_comment.png' alt="Add comment" width="30px"></Image> </Button>
         <HStack>
-        <Text color='#005465' bg='#C6EFF6' borderRadius='10px' px='15px' py='7px' fontWeight="medium" border='2px solid #005465' marginRight="5px">😊 13</Text>
-        <Text color='#005465' bg='#C6EFF6' borderRadius='10px' px='15px' py='7px' fontWeight="medium" border='2px solid #005465' >❤️ 25</Text>
+          {Object.keys(reactions).map((key)=> (
+            <Button onClick={()=> {console.log(reactions); setReactions((prevReactions: { [x: string]: number; }) => ({...prevReactions, [key]: prevReactions[key]+1}))}}color='#005465' bg='#C6EFF6' borderRadius='10px' px='15px' py='7px' fontWeight="medium" border='2px solid #005465' marginRight="5px" >{key}{reactions[key]}</Button>
+          ))}
       </HStack></Flex>
         </Flex>
        )
