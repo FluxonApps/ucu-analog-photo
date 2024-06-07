@@ -41,7 +41,7 @@ const PhotoListComponent = (props: { userPhotos: any; setSearchValue: any} )=>{
     
     return (
       
-      <Flex flexDirection={'column'} pt="30px" pl="40px" color='#005465' bg='#F1F7F8'>
+      <Flex flexDirection={'column'} pt="30px" pl='25px' color='#005465' bg='#F1F7F8'>
         
         <Flex flexDirection={'row'}>
         <Box mr="10px" mb="15px"> <Avatar src={userProfile?.data().profile_picture} width='50px' height='50px'></Avatar> </Box>
@@ -85,12 +85,20 @@ const PhotoListComponent = (props: { userPhotos: any; setSearchValue: any} )=>{
 
 const PhotoCard = (props: { userPhotos: any; setSearchValue: any}) =>  {
     const {userPhotos, setSearchValue} = props
+    const navigate = useNavigate();
+    const [signOut, isSigningOut] = useSignOut(auth);
     // return <div> <PhotoListComponent userPhotos={userPhotos} setSearchValue={setSearchValue}/></div>
     // const navigate = useNavigate();
     const handleInput = (event:any) => setSearchValue(event.target.value)
-    return <div><Flex bg="#F1F7F8"><Input onChange={handleInput} placeholder='Search'  width="70vh" bg='#bee8f0' borderRadius='30px' mt="30px" ml="30px"/></Flex>
+    return <Box px='6vh' py='4vh' bg="#F1F7F8"><Wrap>
+      <Input onChange={handleInput} placeholder='Search'  width="70vh" bg='#bee8f0' borderRadius='30px' />
+      <Spacer/>
+      <Wrap spacing='10px'>
+      <Button onClick={() => navigate('/profile')} bg='#62daf2' borderRadius='50px' color='00232a'>Profile</Button>
+      <Button onClick={signOut} isDisabled={isSigningOut} isLoading={isSigningOut} bg='#62daf2' borderRadius='50px' color='00232a'>Sign out</Button>
+      </Wrap></Wrap>
     <div> <PhotoListComponent userPhotos={userPhotos} setSearchValue={setSearchValue}/></div>
-    </div>}
+    </Box>}
 
 
 function PhotoListPage() {
