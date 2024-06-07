@@ -20,7 +20,7 @@ const [userPhotos, loadingUserPhotos, errorLoadingUserPhotos] = useCollection(
 
 return <><Stack justify="spaceAround" px={40} py={10} spacing='15' backgroundColor='#f1f7f8' minHeight='100vh' color='00232a'><>
 <Wrap>
-<Box marginRight="10px">
+<Box onClick={() => navigate('/')} marginRight="10px">
   <Image src="src/components/util/png_logo.png" alt="Logo" width="45px" height="auto" />
 </Box>
 <Input placeholder='Search your photo' width="70vh" bg='#bee8f0' borderRadius='30px'/>
@@ -83,7 +83,7 @@ return <><Stack justify="spaceAround" px={40} py={10} spacing='15' backgroundCol
           {userPhotos && userPhotos.docs.map((photo) => {
               const photoData = photo.data();
               return (
-                  <Box key={photo.id} boxSize='sm'>
+                  <Box onClick={() => navigate('/photo/'+photo?.id)} key={photo.id} boxSize='sm'>
                       <Image boxSize='300px' objectFit='cover' src={photoData.photo_url} alt='User Photo' />
                   </Box>
               );
