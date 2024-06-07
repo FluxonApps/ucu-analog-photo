@@ -20,11 +20,11 @@ const [userPhotos, loadingUserPhotos, errorLoadingUserPhotos] = useCollection(
   query(usersPhotosCollection, where('user', '==', doc(collection(db, 'users'), userId || 'abcd'))))
 
 return <><Stack justify="spaceAround" px={40} py={10} spacing='15' backgroundColor='#f1f7f8' minHeight='100vh' color='00232a'><>
-<Wrap>
+<Wrap spacing='1vh'>
 <Box onClick={() => navigate('/')} marginRight="10px">
   <Image src={imgUrl} alt="Logo" width="45px" height="auto" />
 </Box>
-<Input placeholder='Search your photo' width="70vh" bg='#bee8f0' borderRadius='30px'/>
+<Input placeholder='Search your photo' width="45vh" bg='#bee8f0' borderRadius='30px'/>
 
 <Button onClick={() => navigate('/')} bg='#62daf2' borderRadius='50px' bg='#bee8f0' color='00232a'>Home</Button>  
 <Spacer/>
@@ -59,7 +59,7 @@ return <><Stack justify="spaceAround" px={40} py={10} spacing='15' backgroundCol
     </Box> 
 
     <Stack>
-        <Text>3</Text>
+        <Text>{userPhotos?.docs.length}</Text>
         <Text>Posts</Text>
       </Stack>
       </HStack>
