@@ -92,7 +92,7 @@ const PhotoCard = (props: { userPhotos: any; setSearchValue: any; userProfile: a
     const navigate = useNavigate();
     const [signOut, isSigningOut] = useSignOut(auth);
     // return <div> <PhotoListComponent userPhotos={userPhotos} setSearchValue={setSearchValue}/></div>
-    const navigate = useNavigate();
+
     const handleInput = (event:any) => setSearchValue(event.target.value)
     return <Box px='6vh' py='4vh' bg="#F1F7F8"><Wrap>
       <Input onChange={handleInput} placeholder='Search'  width="70vh" bg='#bee8f0' borderRadius='30px' />
